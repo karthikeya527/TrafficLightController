@@ -28,12 +28,15 @@ module Divider(
 	 reg [24:0]counter = hz_constant;
 	 always@(posedge clk)
 		begin
-			if (rst) counter = hz_constant;
-			else begin
-				counter = counter - 1;
-				oneHz_enable = (counter == 0);
-				if (!counter) counter = hz_constant;
-			end
+			if (rst)
+                           counter <= hz_constant;
+                        else begin
+                           counter <= counter - 1;
+                           oneHz_enable <= (counter == 1); // You should check (counter == 1) for correct pulse
+                           if (counter == 0)
+                           counter <= hz_constant;
+                        end
+
 		end
 
 
